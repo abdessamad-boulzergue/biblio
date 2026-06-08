@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: docker.io/abdosblz/biblio
+  repository: docker.io/abdosblz/biblio-gen
   pullPolicy: IfNotPresent
-  tag: "0.0.2-2"
+  tag: "0.0.0-16"
 
 imagePullSecrets:
   - name: regcred
@@ -17,15 +17,15 @@ service:
 
 ingress:
   enabled: true
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: biblio.example.com
+    - host: www.gamevibes.fr
       paths:
-        - path: /
+        - path: /biblio
           pathType: Prefix
 
 env:
-  API_URL: "http://biblio.example.com/api"
+  API_URL: "https://api.gamevibes.fr/api/v1"

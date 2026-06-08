@@ -8,8 +8,8 @@ metadata:
 spec:
   project: biblio
   source:
-    repoURL: https://github.com/abdessamad-boulzergue/biblio-argocd.git
-    targetRevision: main
+    repoURL: https://github.com/abdessamad-boulzergue/biblio.git
+    targetRevision: cd/argo-setup
     path: k8s/charts/biblio
     helm:
       valueFiles:
@@ -33,7 +33,7 @@ metadata:
 spec:
   project: biblio
   source:
-    repoURL: https://github.com/abdessamad-boulzergue/biblio-argocd.git
+    repoURL: https://github.com/abdessamad-boulzergue/biblio.git
     targetRevision: main
     path: k8s/charts/biblio-backend
     helm:
