@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: docker.io/abdosblz/biblio-gen
   pullPolicy: IfNotPresent
-  tag: "0.0.0-16"
+  tag: "0.0.0-2"
 
 imagePullSecrets:
   - name: regcred

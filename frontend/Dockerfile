@@ -1,6 +1,7 @@
 # Stage 1: Build the Angular application
 FROM node:20-alpine AS build
 ARG FRONTEND_DIR=frontend
+ARG BASE_HREF=/biblio/
 
 WORKDIR /app
 
@@ -8,12 +9,12 @@ COPY ${FRONTEND_DIR}/package.json ${FRONTEND_DIR}/package-lock.json ./
 RUN npm ci
 
 COPY ${FRONTEND_DIR}/ .
-RUN npm run build -- --configuration production
+RUN npm run build -- --configuration production --base-href ${BASE_HREF}
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
-COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html/biblio
 COPY ${FRONTEND_DIR}/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the entrypoint script
