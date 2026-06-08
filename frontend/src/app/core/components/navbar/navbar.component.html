@@ -1,0 +1,37 @@
+<mat-toolbar class="navbar custom-navbar">
+  <span class="brand" routerLink="/">📚 Biblio Shop</span>
+  
+  <span class="spacer"></span>
+  
+  <div class="nav-links">
+    <button mat-button routerLink="/">Accueil</button>
+    <button mat-button routerLink="/catalogue">Catalogue</button>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="user-actions">
+    <button mat-icon-button class="cart-btn" routerLink="/cart">
+      <mat-icon [matBadge]="cartItemCount" matBadgeColor="accent" [matBadgeHidden]="cartItemCount === 0">shopping_cart</mat-icon>
+    </button>
+    
+    <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+      <button mat-button class="login-btn" routerLink="/login">
+        <mat-icon>login</mat-icon> Connexion
+      </button>
+      <button mat-raised-button color="accent" routerLink="/register">
+        <mat-icon>person_add</mat-icon> S'inscrire
+      </button>
+    </ng-container>
+
+    <ng-template #loggedInMenu>
+      <button *ngIf="isAdmin" mat-stroked-button class="admin-btn" routerLink="/admin">
+        <mat-icon>dashboard</mat-icon> Backoffice
+      </button>
+      <span class="welcome-text">Bonjour, {{ username }}</span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,96 @@
+<div class="cart-container">
+  <h1>Votre Panier</h1>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <mat-icon class="empty-icon">shopping_cart</mat-icon>
+    <h2>Votre panier est vide</h2>
+    <p>Découvrez notre catalogue et trouvez les équipements qu'il vous faut !</p>
+    <button mat-raised-button color="primary" routerLink="/catalogue">Voir le catalogue</button>
+  </div>
+
+  <div class="cart-content" *ngIf="cartItems.length > 0">
+    <div class="cart-table-container">
+      <table mat-table [dataSource]="cartItems" class="mat-elevation-z2">
+        
+        <!-- Product Column -->
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef> Produit </th>
+          <td mat-cell *matCellDef="let item" class="product-cell">
+            <img [src]="item.article.mainImage || 'https://via.placeholder.com/50'" alt="Produit">
+            <div>
+              <div class="title">{{ item.article.title }}</div>
+              <div class="sku">Réf: {{ item.article.sku }}</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Prix Unitaire HT </th>
+          <td mat-cell *matCellDef="let item"> {{ item.article.priceHT | number:'1.2-2' }} € </td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantité </th>
+          <td mat-cell *matCellDef="let item">
+            <div class="qty-controls">
+              <button mat-icon-button (click)="decreaseQuantity(item)">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+              <span>{{ item.quantity }}</span>
+              <button mat-icon-button (click)="increaseQuantity(item)" [disabled]="item.quantity >= item.article.stockQuantity">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef> Sous-total HT </th>
+          <td mat-cell *matCellDef="let item" class="bold"> {{ (item.article.priceHT * item.quantity) | number:'1.2-2' }} € </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" (click)="removeItem(item)" title="Retirer du panier">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="cart-summary">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Récapitulatif</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="summary-line">
+            <span>Total HT :</span>
+            <span>{{ totalHT | number:'1.2-2' }} €</span>
+          </div>
+          <div class="summary-line">
+            <span>TVA :</span>
+            <span>{{ (totalTTC - totalHT) | number:'1.2-2' }} €</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="summary-line total">
+            <span>Total TTC :</span>
+            <span>{{ totalTTC | number:'1.2-2' }} €</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" class="checkout-btn" routerLink="/checkout">Procéder au paiement</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

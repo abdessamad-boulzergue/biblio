@@ -1,0 +1,84 @@
+.hero-section {
+  text-align: center;
+  padding: 120px 20px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.featured-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+  }
+}
+
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+
+  img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  mat-card-content {
+    flex-grow: 1;
+    margin-top: 15px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e91e63;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    color: #666;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+  font-style: italic;
+}

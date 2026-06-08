@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
+  background-color: #e3e6e6;
+  color: #334155;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
+
+.auth-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}

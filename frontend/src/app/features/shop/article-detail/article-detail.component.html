@@ -1,0 +1,63 @@
+<div class="article-detail-container" *ngIf="article">
+  <div class="back-link">
+    <button mat-button routerLink="/catalogue">
+      <mat-icon>arrow_back</mat-icon> Retour au catalogue
+    </button>
+  </div>
+
+  <div class="detail-grid">
+    <div class="image-gallery">
+      <img class="main-image" [src]="article.mainImage || 'https://via.placeholder.com/600x400?text=Image+Indisponible'" alt="{{ article.title }}">
+      <!-- Optional: Thumbnail gallery could go here -->
+    </div>
+
+    <div class="product-info">
+      <span class="category-badge">{{ article.category?.name }}</span>
+      <h1>{{ article.title }}</h1>
+      <p class="sku">Réf: {{ article.sku }}</p>
+      
+      <div class="price-section">
+        <span class="price">{{ article.priceHT }} € <small>HT</small></span>
+        <span class="tax-info">TVA: {{ article.taxRate }}%</span>
+      </div>
+
+      <div class="stock-status" [class.in-stock]="article.stockQuantity > 0" [class.out-of-stock]="article.stockQuantity === 0">
+        <mat-icon>{{ article.stockQuantity > 0 ? 'check_circle' : 'cancel' }}</mat-icon>
+        {{ article.stockQuantity > 0 ? article.stockQuantity + ' en stock' : 'Rupture de stock' }}
+      </div>
+
+      <p class="short-desc">{{ article.shortDescription }}</p>
+
+      <div class="add-to-cart-section" *ngIf="article.stockQuantity > 0">
+        <div class="quantity-selector">
+          <button mat-icon-button (click)="decreaseQuantity()" [disabled]="quantity <= 1">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <input type="number" [(ngModel)]="quantity" readonly>
+          <button mat-icon-button (click)="increaseQuantity()" [disabled]="quantity >= article.stockQuantity">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <button mat-raised-button color="accent" class="add-btn" (click)="addToCart()">
+          <mat-icon>shopping_cart</mat-icon> Ajouter au panier
+        </button>
+      </div>
+
+      <div class="long-desc">
+        <h3>Description</h3>
+        <p>{{ article.longDescription || 'Aucune description détaillée disponible.' }}</p>
+      </div>
+
+      <div class="specs">
+        <h3>Caractéristiques</h3>
+        <ul>
+          <li *ngIf="article.weight"><strong>Poids :</strong> {{ article.weight }} kg</li>
+          <li *ngIf="article.dimensions"><strong>Dimensions :</strong> {{ article.dimensions }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!article" class="loading">
+  Chargement de l'article...
+</div>

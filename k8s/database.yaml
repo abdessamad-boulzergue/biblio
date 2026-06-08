@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: biblio-db
+  labels:
+    app: biblio-db
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: biblio-db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: biblio-db
+spec:
+  serviceName: "biblio-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: biblio-db
+  template:
+    metadata:
+      labels:
+        app: biblio-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_DB
+          value: "biblio_db"
+        - name: POSTGRES_USER
+          value: "biblio_user"
+        - name: POSTGRES_PASSWORD
+          value: "biblio_password"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

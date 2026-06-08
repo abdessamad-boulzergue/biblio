@@ -1,0 +1,33 @@
+<div class="hero-section">
+  <h1>Bienvenue sur Biblio Shop</h1>
+  <p>Tout le matériel pour équiper votre bibliothèque, en un seul endroit.</p>
+  <button mat-raised-button color="accent" size="large" routerLink="/catalogue">Explorer le catalogue</button>
+</div>
+
+<div class="featured-section">
+  <h2>Nos Articles à la Une</h2>
+  
+  <div *ngIf="featuredArticles.length === 0" class="empty-state">
+    <p>Aucun article disponible pour le moment.</p>
+  </div>
+
+  <div class="article-grid">
+    <mat-card class="article-card" *ngFor="let article of featuredArticles">
+      <img mat-card-image [src]="article.mainImage || 'https://via.placeholder.com/300x200?text=Image+Indisponible'" alt="Photo de {{article.title}}">
+      <mat-card-header>
+        <mat-card-title>{{ article.title }}</mat-card-title>
+        <mat-card-subtitle>{{ article.category?.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="price">{{ article.priceHT }} € HT</p>
+        <p class="description">{{ article.shortDescription | slice:0:100 }}...</p>
+      </mat-card-content>
+      <mat-card-actions class="actions">
+        <button mat-button color="primary">Détails</button>
+        <button mat-raised-button color="primary" (click)="addToCart(article)">
+          <mat-icon>add_shopping_cart</mat-icon> Ajouter
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

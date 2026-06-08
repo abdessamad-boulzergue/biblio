@@ -1,0 +1,128 @@
+<div class="checkout-container">
+  <h1>Finaliser votre commande</h1>
+
+  <mat-stepper [linear]="isLinear" #stepper>
+    <!-- Etape 1: Recap -->
+    <mat-step>
+      <ng-template matStepLabel>Récapitulatif</ng-template>
+      <div class="step-content">
+        <h3>Votre Panier</h3>
+        <ul class="recap-list">
+          <li *ngFor="let item of cartItems">
+            {{item.quantity}}x {{item.article.title}} - {{ (item.article.priceHT * item.quantity) | number:'1.2-2' }} € HT
+          </li>
+        </ul>
+        <mat-divider></mat-divider>
+        <h4>Total TTC estimé : {{ totalTTC | number:'1.2-2' }} €</h4>
+        <p class="info-text">(Les frais de port seront calculés à l'étape suivante)</p>
+        
+        <div class="step-actions">
+          <button mat-button routerLink="/cart">Retour au panier</button>
+          <button mat-raised-button color="primary" matStepperNext [disabled]="cartItems.length === 0">Valider et continuer</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- Etape 2: Adresse -->
+    <mat-step [stepControl]="shippingFormGroup">
+      <ng-template matStepLabel>Livraison</ng-template>
+      <div class="step-content">
+        <form [formGroup]="shippingFormGroup">
+          <h3>Adresse de livraison</h3>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nom complet</mat-label>
+            <input matInput formControlName="fullName" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Adresse (N°, Rue)</mat-label>
+            <input matInput formControlName="street" required>
+          </mat-form-field>
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Code Postal</mat-label>
+              <input matInput formControlName="zipCode" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Ville</mat-label>
+              <input matInput formControlName="city" required>
+            </mat-form-field>
+          </div>
+          
+          <button mat-button type="button" (click)="copyShippingToBilling()">Utiliser la même adresse pour la facturation</button>
+          
+          <mat-divider style="margin: 20px 0;"></mat-divider>
+          <h3>Adresse de facturation</h3>
+          <form [formGroup]="billingFormGroup">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Nom complet</mat-label>
+              <input matInput formControlName="fullName" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Adresse (N°, Rue)</mat-label>
+              <input matInput formControlName="street" required>
+            </mat-form-field>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Code Postal</mat-label>
+                <input matInput formControlName="zipCode" required>
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Ville</mat-label>
+                <input matInput formControlName="city" required>
+              </mat-form-field>
+            </div>
+          </form>
+
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>Retour</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="shippingFormGroup.invalid || billingFormGroup.invalid">Continuer vers le paiement</button>
+          </div>
+        </form>
+      </div>
+    </mat-step>
+
+    <!-- Etape 3: Paiement -->
+    <mat-step>
+      <ng-template matStepLabel>Paiement</ng-template>
+      <div class="step-content">
+        <h3>Choisissez votre mode de paiement</h3>
+        
+        <mat-radio-group [(ngModel)]="selectedPaymentMethod" class="payment-method-group">
+          <mat-radio-button value="CMI" class="payment-option">
+            <div class="payment-label">
+              <span>Carte Bancaire (Sécurisé par CMI)</span>
+            </div>
+          </mat-radio-button>
+          <mat-radio-button value="COD" class="payment-option">
+            <span>Paiement à la livraison (Cash on Delivery)</span>
+          </mat-radio-button>
+        </mat-radio-group>
+        
+        <div *ngIf="paymentError" class="error-msg">{{ paymentError }}</div>
+        
+        <div class="step-actions">
+          <button mat-button matStepperPrevious [disabled]="paymentProcessing">Retour</button>
+          <button mat-raised-button color="accent" (click)="pay()" [disabled]="paymentProcessing || !selectedPaymentMethod">
+            {{ paymentProcessing ? 'Redirection / Traitement...' : 'Valider la commande' }}
+          </button>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- Etape 4: Confirmation (uniquement vu si COD ou de retour de CMI) -->
+    <mat-step>
+      <ng-template matStepLabel>Confirmation</ng-template>
+      <div class="step-content text-center success-step">
+        <mat-icon color="primary" class="success-icon">check_circle</mat-icon>
+        <h2>Merci pour votre commande !</h2>
+        <p>Votre commande <strong>{{ orderNumber }}</strong> est confirmée.</p>
+        <p>Un email de récapitulatif vous a été envoyé.</p>
+        <div class="step-actions justify-center">
+          <button mat-raised-button color="primary" routerLink="/">Retour à l'accueil</button>
+          <button mat-stroked-button routerLink="/client/orders">Mes commandes</button>
+        </div>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+</div>

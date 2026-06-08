@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Tableau de bord</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="dashboard-widgets">
+      <mat-card class="widget">
+        <mat-card-header>
+          <mat-card-title>Articles</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>Gérer vos articles et leur stock</h2>
+          <button mat-raised-button color="primary" routerLink="/admin/articles">Voir les articles</button>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="widget">
+        <mat-card-header>
+          <mat-card-title>Catégories</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>Classer vos fournitures</h2>
+          <button mat-raised-button color="accent" routerLink="/admin/categories">Voir les catégories</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>
