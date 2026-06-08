@@ -1,0 +1,6 @@
+ingress:
+  hosts:
+    - host: biblio-backend-staging.example.com
+      paths:
+        - path: /
+          pathType: Prefix

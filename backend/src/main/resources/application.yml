@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: backend
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/biblio_db
+    username: biblio_user
+    password: biblio_password
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000 # 1 day in ms
+  refresh-expiration: 604800000 # 7 days in ms
+
+cmi:
+  gateway-url: https://testpayment.cmi.co.ma/fim/est3Dgate
+  client-id: 600000000 # TODO: Remplacez par votre Client ID CMI
+  store-key: Test1234 # TODO: Remplacez par votre clé secrète (Store Key)
+  callback-url: http://localhost:8080/api/v1/cmi/callback
+  ok-url: http://localhost:4200/checkout/success
+  fail-url: http://localhost:4200/checkout/fail
+
+# Configuration Mailtrap (pour tester les e-mails)
+# Créez un compte sur mailtrap.io pour obtenir ces identifiants
+spring.mail:
+  host: sandbox.smtp.mailtrap.io
+  port: 2525
+  username: mailtrap_username_placeholder # TODO: Remplacez par votre username
+  password: mailtrap_password_placeholder # TODO: Remplacez par votre password
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+

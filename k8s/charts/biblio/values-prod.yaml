@@ -1,0 +1,9 @@
+ingress:
+  hosts:
+    - host: biblio-prod.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+env:
+  API_URL: "http://biblio-backend-prod.example.com/api"

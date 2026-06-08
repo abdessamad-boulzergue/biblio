@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: biblio-dev
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: biblio
+  source:
+    repoURL: https://github.com/abdessamad-boulzergue/biblio-argocd.git
+    targetRevision: main
+    path: k8s/charts/biblio
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: biblio-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: biblio-backend-dev
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: biblio
+  source:
+    repoURL: https://github.com/abdessamad-boulzergue/biblio-argocd.git
+    targetRevision: main
+    path: k8s/charts/biblio-backend
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: biblio-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
