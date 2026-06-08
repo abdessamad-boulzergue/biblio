@@ -6,14 +6,16 @@
 
 <div class="featured-section">
   <h2>Nos Articles à la Une</h2>
-  
+
   <div *ngIf="featuredArticles.length === 0" class="empty-state">
     <p>Aucun article disponible pour le moment.</p>
   </div>
 
   <div class="article-grid">
     <mat-card class="article-card" *ngFor="let article of featuredArticles">
-      <img mat-card-image [src]="article.mainImage || 'https://via.placeholder.com/300x200?text=Image+Indisponible'" alt="Photo de {{article.title}}">
+      <img mat-card-image
+        [src]="article.mainImage || 'https://www.materiel-informatique.fr/93653-large_default/brother-tn243bk.webp'"
+        alt="Photo de {{article.title}}">
       <mat-card-header>
         <mat-card-title>{{ article.title }}</mat-card-title>
         <mat-card-subtitle>{{ article.category?.name }}</mat-card-subtitle>

@@ -1,8 +1,8 @@
 <div class="catalogue-container">
-  
+
   <aside class="sidebar">
     <h3>Filtres & Catégories</h3>
-    
+
     <mat-form-field appearance="outline" class="search-bar">
       <mat-label>Rechercher un article...</mat-label>
       <input matInput [(ngModel)]="searchKeyword" (keyup.enter)="onSearch()">
@@ -13,7 +13,8 @@
       <a mat-list-item (click)="selectCategory(null)" [class.active-cat]="selectedCategoryId === null">
         Toutes les catégories
       </a>
-      <a mat-list-item *ngFor="let cat of categories" (click)="selectCategory(cat.id)" [class.active-cat]="selectedCategoryId === cat.id">
+      <a mat-list-item *ngFor="let cat of categories" (click)="selectCategory(cat.id)"
+        [class.active-cat]="selectedCategoryId === cat.id">
         {{ cat.name }}
       </a>
     </mat-nav-list>
@@ -31,7 +32,9 @@
 
     <div class="article-grid">
       <mat-card class="article-card" *ngFor="let article of articles">
-        <img mat-card-image [src]="article.mainImage || 'https://via.placeholder.com/300x200?text=Image+Indisponible'" alt="Photo">
+        <img mat-card-image
+          [src]="article.mainImage || 'https://www.materiel-informatique.fr/93653-large_default/brother-tn243bk.webp'"
+          alt="Photo">
         <mat-card-header>
           <mat-card-title [routerLink]="['/article', article.id]">{{ article.title }}</mat-card-title>
           <mat-card-subtitle>{{ article.category?.name }}</mat-card-subtitle>
@@ -44,7 +47,8 @@
         </mat-card-content>
         <mat-card-actions class="actions">
           <button mat-button color="primary" [routerLink]="['/article', article.id]">Détails</button>
-          <button mat-raised-button color="primary" (click)="addToCart(article)" [disabled]="article.stockQuantity === 0">
+          <button mat-raised-button color="primary" (click)="addToCart(article)"
+            [disabled]="article.stockQuantity === 0">
             <mat-icon>add_shopping_cart</mat-icon> Ajouter
           </button>
         </mat-card-actions>
